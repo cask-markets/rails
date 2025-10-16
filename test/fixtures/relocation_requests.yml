@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  cask: one
+  requester: one
+  from_location: one
+  to_location: one
+  status: 1
+  requested_at: 2025-10-16 14:48:42
+  completed_at: 2025-10-16 14:48:42
+  notes: MyText
+
+two:
+  cask: two
+  requester: two
+  from_location: two
+  to_location: two
+  status: 1
+  requested_at: 2025-10-16 14:48:42
+  completed_at: 2025-10-16 14:48:42
+  notes: MyText
