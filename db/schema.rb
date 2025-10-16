@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_16_134842) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_16_142557) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -19,12 +19,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_16_134842) do
     t.bigint "location_id", null: false
     t.string "cask_number", null: false
     t.text "description"
-    t.string "spirit_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "spirit_type_id", null: false
     t.index ["cask_number"], name: "index_casks_on_cask_number"
     t.index ["location_id"], name: "index_casks_on_location_id"
     t.index ["owner_id"], name: "index_casks_on_owner_id"
+    t.index ["spirit_type_id"], name: "index_casks_on_spirit_type_id"
   end
 
   create_table "companies", force: :cascade do |t|
@@ -61,6 +62,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_16_134842) do
     t.index ["requester_id"], name: "index_relocation_requests_on_requester_id"
     t.index ["status"], name: "index_relocation_requests_on_status"
     t.index ["to_location_id"], name: "index_relocation_requests_on_to_location_id"
+  end
+
+  create_table "spirit_types", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_spirit_types_on_name", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -103,6 +112,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_16_134842) do
   end
 
   add_foreign_key "casks", "locations"
+  add_foreign_key "casks", "spirit_types"
   add_foreign_key "casks", "users", column: "owner_id"
   add_foreign_key "companies", "users", column: "owner_id"
   add_foreign_key "locations", "warehouses"
