@@ -5,6 +5,7 @@
     "build": "bun bun.config.js"
   },
   "dependencies": {
+    "@clerk/clerk-js": "^5.101.1",
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^8.0.18"
   }

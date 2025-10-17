@@ -9,6 +9,15 @@ Rails.application.routes.draw do
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
+  # Clerk webhooks
+  namespace :webhooks do
+    post "clerk", to: "clerk#create"
+  end
+
+  # Authentication pages
+  get "sign-in", to: "pages#sign_in"
+  get "sign-up", to: "pages#sign_up"
+
   # Defines the root path route ("/")
   root "pages#home"
 end
