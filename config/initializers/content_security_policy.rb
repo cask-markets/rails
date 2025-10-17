@@ -14,6 +14,7 @@ Rails.application.configure do
     policy.style_src   :self, :https, :unsafe_inline, "https://*.clerk.accounts.dev"
     policy.connect_src :self, :https, "https://*.clerk.accounts.dev", "https://clerk.com", "https://api.clerk.com"
     policy.frame_src   "https://*.clerk.accounts.dev"
+    policy.worker_src  :self, :blob
     # Specify URI for violation reports
     # policy.report_uri "/csp-violation-report-endpoint"
   end
