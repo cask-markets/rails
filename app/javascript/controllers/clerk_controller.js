@@ -9,7 +9,7 @@ export default class extends Controller {
 
   connect() {
     // Wait for Clerk to load if not already loaded
-    if (window.Clerk) {
+    if (window.Clerk && window.Clerk.loaded) {
       this.mountComponent()
     } else {
       window.addEventListener("clerk:loaded", () => {
@@ -22,7 +22,7 @@ export default class extends Controller {
     this.unmountComponent()
   }
 
-  mountComponent() {
+  async mountComponent() {
     const componentName = this.componentValue
     if (!componentName) {
       console.error("Clerk component name not specified")
@@ -30,26 +30,39 @@ export default class extends Controller {
     }
 
     try {
+      // Ensure Clerk is loaded
+      if (!window.Clerk) {
+        console.error("Clerk not loaded")
+        return
+      }
+
       // Mount the Clerk component
-      const props = this.hasPropsValue ? this.propsValue : {}
+      const props = this.hasPropsValue ? this.propsValue : {
+        afterSignInUrl: "/",
+        afterSignUpUrl: "/",
+        signInUrl: "/sign-in",
+        signUpUrl: "/sign-up"
+      }
 
       // Common Clerk components
       switch (componentName) {
         case "SignIn":
-          window.Clerk.mountSignIn(this.element, props)
+          await window.Clerk.mountSignIn(this.element, props)
           break
         case "SignUp":
-          window.Clerk.mountSignUp(this.element, props)
+          await window.Clerk.mountSignUp(this.element, props)
           break
         case "UserButton":
-          window.Clerk.mountUserButton(this.element, props)
+          await window.Clerk.mountUserButton(this.element, props)
           break
         case "UserProfile":
-          window.Clerk.mountUserProfile(this.element, props)
+          await window.Clerk.mountUserProfile(this.element, props)
           break
         default:
           console.error(`Unknown Clerk component: ${componentName}`)
       }
+
+      console.log(`Mounted ${componentName} component`)
     } catch (error) {
       console.error("Error mounting Clerk component:", error)
     }
@@ -57,7 +70,9 @@ export default class extends Controller {
 
   unmountComponent() {
     try {
-      window.Clerk?.unmountComponentAtNode(this.element)
+      if (window.Clerk) {
+        window.Clerk.unmountComponentAtNode(this.element)
+      }
     } catch (error) {
       console.error("Error unmounting Clerk component:", error)
     }
