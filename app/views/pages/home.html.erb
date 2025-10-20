@@ -7,10 +7,11 @@
       </div>
       <div class="flex items-center gap-4">
         <% if user_signed_in? %>
+          <span class="text-white mr-2">Welcome, <%= current_user.name %></span>
           <div data-controller="clerk" data-clerk-component-value="UserButton"></div>
         <% else %>
-          <a href="/sign-in" class="px-6 py-2 text-white hover:text-purple-300 transition-colors font-medium">Sign In</a>
-          <a href="/sign-up" class="px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-lg font-semibold shadow-lg shadow-purple-500/30 transition-all">
+          <a href="<%= clerk_sign_in_url %>" class="px-6 py-2 text-white hover:text-purple-300 transition-colors font-medium">Sign In</a>
+          <a href="<%= clerk_sign_up_url %>" class="px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-lg font-semibold shadow-lg shadow-purple-500/30 transition-all">
             Sign Up
           </a>
         <% end %>

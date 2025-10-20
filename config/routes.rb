@@ -14,10 +14,6 @@ Rails.application.routes.draw do
     post "clerk", to: "clerk#create"
   end
 
-  # Authentication pages
-  get "sign-in", to: "pages#sign_in"
-  get "sign-up", to: "pages#sign_up"
-
   # Defines the root path route ("/")
   root "pages#home"
 end
